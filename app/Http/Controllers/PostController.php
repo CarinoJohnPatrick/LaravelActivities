@@ -8,10 +8,30 @@ use App\Models\Post;
 class PostController extends Controller
 {
     function addData(Request $req) {
-        $post= new Post;
-        $post->title=$req->title;
-        $post->description=$req->description;
+        $req->validate([
+            'Title' => 'required|max:100',
+            'Description' => 'required'
+        ]);
+        
+        if($req->hasFile('img')){
+    
+            $filenameWithExt = $req->file('img')->getClientOriginalName();
+    
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            
+            $extension = $req->file('img')->getClientOriginalExtension();
+    
+            $filenameToStore = $filename.'_'.time().'.'.$extension;
+    
+            $path = $req->file('img')->storeAs('public/img', $filenameToStore);
+        } else{
+            $filenameToStore = '';
+        }
+        $post = new Post();
+        $post->fill($req->all());
+        $post->img = $filenameToStore;
         $post->save();
+        return redirect('list');
     }
 
     function show(){

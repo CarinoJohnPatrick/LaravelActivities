@@ -1,3 +1,17 @@
+<html>
+<head>
+<style>
+table{
+    width:80%;
+    
+}
+
+th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
+        }
+</style>
+</head>
 <h1>list</h1>
 <a href="add">add</a>
 <table border="1">
@@ -24,3 +38,4 @@
 
 @endforeach
 </table>
+</html>
